@@ -1,5 +1,5 @@
 # Criar estrutura do banco de dados
-from enum import unique
+#from enum import unique
 
 from fakepinterest import database
 
