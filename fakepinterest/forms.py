@@ -5,6 +5,7 @@ from wtforms.validators import DataRequired, Email, EqualTo, Length, ValidationE
 from fakepinterest.models import Usuario
 from fakepinterest.models import Usuario
 
+
 class FormLogin(FlaskForm):
     email = StringField("E-mail", validators=[DataRequired(), Email()])
     senha = PasswordField("Senha", validators=[DataRequired()])
