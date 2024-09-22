@@ -18,7 +18,6 @@ class FormCriarConta(FlaskForm):
     confirmacao_senha = PasswordField("Confirmação de Senha", validators=[DataRequired(), EqualTo("senha")])
     botao_confirmacao = SubmitField("Criar Conta")
 
-
     def validate_email(self, email):
         usuario = Usuario.query.filter_by(email=email.data).first()
         if usuario:
