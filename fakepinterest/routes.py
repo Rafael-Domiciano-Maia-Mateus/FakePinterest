@@ -52,14 +52,12 @@ def perfil(id_usuario):
         if form_foto.validate_on_submit():
             arquivo = form_foto.foto.data
             nome_seguro = secure_filename(arquivo.filename)
-            # Salvar o arquivo na pasta fotos_posts
             caminho = os.path.join(
                 os.path.abspath(os.path.dirname(__file__)),
                 app.config["UPLOAD_FOLDER"],
                 nome_seguro
             )
             arquivo.save(caminho)
-            # Registrar esse arquivo no canco de dados
             foto = Foto(imagem=nome_seguro, id_usuario=current_user.id)
             database.session.add(foto)
             database.session.commit()
