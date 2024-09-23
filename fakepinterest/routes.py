@@ -24,7 +24,6 @@ def homepage():
 @app.route("/criarconta", methods=["GET", "POST"])
 def criarconta():
     formcriarconta = FormCriarConta()
-
     if formcriarconta.validate_on_submit():
         senha = bcrypt.generate_password_hash(formcriarconta.senha.data)
         usuario = Usuario(
@@ -32,14 +31,10 @@ def criarconta():
             email=formcriarconta.email.data,
             senha=senha
         )
-
         database.session.add(usuario)
         database.session.commit()
-
         login_user(usuario, remember=True)
-
         return redirect(url_for("perfil", id_usuario=usuario.id))
-
     return render_template("criarconta.html", form=formcriarconta)
 
 
