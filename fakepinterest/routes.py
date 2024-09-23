@@ -1,11 +1,10 @@
 # Criar as rotas do nosso site (os links)
+from fakepinterest import app, bcrypt, database, login_manager
+from fakepinterest.models import Usuario, Foto
+from fakepinterest.forms import FormLogin, FormCriarConta, FormFoto
 from flask import render_template, url_for, redirect
 from wtforms.validators import email
-from fakepinterest import app, bcrypt, database
 from flask_login import login_required, login_user, logout_user, current_user
-from fakepinterest.models import Usuario, Foto
-from fakepinterest import login_manager
-from fakepinterest.forms import FormLogin, FormCriarConta, FormFoto
 import os
 from werkzeug.utils import secure_filename
 
@@ -23,6 +22,7 @@ def homepage():
 @app.route("/criarconta", methods=["GET", "POST"])
 def criarconta():
     formcriarconta = FormCriarConta()
+
     if formcriarconta.validate_on_submit():
         senha = bcrypt.generate_password_hash(formcriarconta.senha.data)
         usuario = Usuario(
@@ -65,6 +65,13 @@ def perfil(id_usuario):
 def logout():
     logout_user()
     return redirect(url_for("homepage"))
+
+
+@app.route("/feed")
+@login_required
+def feed():
+    fotos = Foto.query.order_by(Foto.data_criacao).all()[:100]
+    return render_template("feed.html", fotos=fotos)
 
 
 @login_manager.user_loader
