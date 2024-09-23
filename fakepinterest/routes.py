@@ -1,10 +1,10 @@
 # Criar as rotas do nosso site (os links)
-from fakepinterest import app, bcrypt, database, login_manager
-from fakepinterest.models import Usuario, Foto
-from fakepinterest.forms import FormLogin, FormCriarConta, FormFoto
 from flask import render_template, url_for, redirect
 from wtforms.validators import email
+from fakepinterest import app, bcrypt, database, login_manager
 from flask_login import login_required, login_user, logout_user, current_user
+from fakepinterest.models import Usuario, Foto
+from fakepinterest.forms import FormLogin, FormCriarConta, FormFoto
 import os
 from werkzeug.utils import secure_filename
 
@@ -16,6 +16,7 @@ def homepage():
         if usuario and bcrypt.check_password_hash(usuario.senha, formlogin.senha.data):
             login_user(usuario)
             return redirect(url_for("perfil", id_usuario=usuario.id))
+
     return render_template("homepage.html", form=formlogin)
 
 
