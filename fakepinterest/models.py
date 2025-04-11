@@ -1,7 +1,6 @@
 # Criar estrutura do banco de dados
 from enum import unique
 from sqlalchemy.orm import backref
-
 from fakepinterest import database, login_manager
 from datetime import datetime
 from flask_login import UserMixin
